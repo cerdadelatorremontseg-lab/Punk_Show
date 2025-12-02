@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tu Recomendacion Musical</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background: #000;
+            color: #fff;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            border: 2px solid #fff;
+            padding: 30px;
+        }
+        h1 {
+            color: #ff0000;
+            text-align: center;
+            text-transform: uppercase;
+        }
+        .diagnostico {
+            background: #111;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 3px solid #ff0000;
+            animation: slideIn 0.6s ease-out;
+        }
+        .recomendacion {
+            background: #222;
+            padding: 15px;
+            margin: 15px 0;
+            border: 1px solid #333;
+            animation: fadeInUp 0.6s ease-out;
+            animation-fill-mode: both;
+        }
+        .recomendacion:nth-child(1) { animation-delay: 0.2s; }
+        .recomendacion:nth-child(2) { animation-delay: 0.4s; }
+        .recomendacion:nth-child(3) { animation-delay: 0.6s; }
+        .artista {
+            color: #ff0000;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        .cancion {
+            font-style: italic;
+        }
+        .porque {
+            color: #666;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+        .btn {
+            background: #ff0000;
+            color: #000;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            animation: bounceIn 1s ease-out;
+        }
+        .btn:hover {
+            background: #fff;
+            color: #000;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 0, 0, 0.4);
+        }
+        .btn:active {
+            animation: punkClick 0.4s ease;
+        }
+        @keyframes punkClick {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7);
+            }
+            50% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 10px rgba(255, 0, 0, 0);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(255, 0, 0, 0);
+            }
+        }
+        @keyframes slideIn {
+            from {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        @keyframes fadeInUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        @keyframes bounceIn {
+            0% {
+                transform: scale(0.3);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            70% {
+                transform: scale(0.9);
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%;
+        }
+        .btn:focus:not(:active)::after {
+            animation: ripple 1s ease-out;
+        }
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(20, 20);
+                opacity: 0;
+            }
+        }
+        .emocion-titulo {
+            text-transform: uppercase;
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% {
+                color: #ff0000;
+            }
+            50% {
+                color: #ff6666;
+            }
+            100% {
+                color: #ff0000;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Punk Show</h1>
+       
+        <div class="diagnostico">
+            <div class="emocion-titulo">{{ emocion }}</div>
+            <p><strong>Estado emocional identificado como:</strong> "{{ emocion.upper() }}"</p>
+            <p><strong>Terapia sonora punk y rock:</strong></p>
+        </div>
+
+
+        <h2>LA RECOMENDACIÓN:</h2>
+       
+        {% for rec in recomendaciones %}
+        <div class="recomendacion">
+            <div class="artista">{{ rec.artista }}</div>
+            <div class="cancion">«{{ rec.cancion }}»</div>
+            <div class="porque">→ {{ rec.porque }}</div>
+        </div>
+        {% endfor %}
+
+
+        <div style="text-align: center; margin-top: 30px;">
+            <p><strong>Modo de uso:</strong> Escuchar en volumen elevado.</p>
+            <a href="{{ url_for('preguntas') }}" class="btn">NUEVA RECOMENDACIÓN</a>
+        </div>
+    </div>
+</body>
+</html>
